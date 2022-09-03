@@ -1,13 +1,8 @@
 import React, { useRef } from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
 import styled from 'styled-components'
-import { setTextRange } from 'typescript';
-const styles = {
-  border: '0.0625rem solid #9c9c9c',
-  borderRadius: '8px',
-};
 
-const Canvas = class extends React.Component {
+const Canvas = class extends React.Component<any> {
   canvas: React.RefObject<any>;
   constructor(props:any) {
     super(props);
@@ -19,11 +14,15 @@ const Canvas = class extends React.Component {
     return (
       <>
         <ReactSketchCanvas
-        style={styles}
+        style={{
+          border: `3px solid ${this.props.color}`,
+          borderRadius: '8px',
+          backgroundSize:'contain'
+        }}
           ref={this.canvas}
           strokeWidth={5}
           strokeColor="black"
-          backgroundImage='https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png'
+          backgroundImage='https://i.imgur.com/UWSVFu3.png'
         />
         <button
         style={{top:"300px"}}
@@ -58,16 +57,16 @@ const Canvas = class extends React.Component {
 function App() {
 
   const [textRange, setTextRange] = React.useState("");
-  const userCanvas = useRef<any>(null)
 
   return (
-    <div>
+
+    <div style={{position:"relative", width:"100%",display:"flex",justifyContent: "center",alignItems: "center",flexDirection:"column"}}>
       <CanvasContainer>
-      <TextContainer>
+      <TextContainer color="red">
       <div><h2>callum</h2></div>
           <p>{textRange}</p> 
         </TextContainer>
-        <Canvas/>
+        <Canvas color="red"/>
         <TextContainer>
           <div><h2>callum</h2></div>
           <p></p> 
@@ -80,6 +79,7 @@ function App() {
       <input onChange={(e:any)=>setTextRange(e.target.value)}/>
       
     </div>
+
   );
 }
 
@@ -89,17 +89,18 @@ const TextContainer = styled.div`
   & *{
     display: inline;
     vertical-align: top;
-    line-height: 46px;
+    line-height: 43px;
     word-wrap: break-word;
 white-space: pre-wrap;
 word-break: break-word;
 
   }
   & div{
-    border: 1px solid black;
+    border: 3px solid;
+    border-color: ${props => props.color};
     display: inline-block;
     width: 150px;
-    height:46px;
+    height:40px;
     text-align: center;
     border-top-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -110,7 +111,8 @@ word-break: break-word;
 
 const CanvasContainer = styled.div`
   position:relative;
-  width: 601px;
+  width: 100%;
+  max-width: 601px;
   height: 215px;
 
   &>*{
@@ -126,9 +128,7 @@ const CanvasContainer = styled.div`
     pointer-events: none;
   }
 
-  & p {
-    padding-left: 10px;
-  }
+
 `
 
 export default App;
