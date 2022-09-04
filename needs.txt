@@ -1,0 +1,4 @@
+ENDPOINTS
+
+- USER LOGIN
+- JOIN ROOM (requires room id, size of room, current members)
