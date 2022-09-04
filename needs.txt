@@ -2,3 +2,13 @@ ENDPOINTS
 
 - USER LOGIN
 - JOIN ROOM (requires room id, size of room, current members)
+
+
+- SENT MESSAGE
+ {
+    username:string,
+    userColor:string,
+    textMsg:string,
+    imgMsg:string, /* used to fill the message sent component */
+    svgMsg:string, /* used to allow for return old message to canvas*/
+ }

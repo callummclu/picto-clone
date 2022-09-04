@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const MessageContainer = () => {
+export const CanvasControls = () => {
     return (
         <></>
     )
