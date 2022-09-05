@@ -2,108 +2,123 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Canvas } from './UserCanvas';
 
-export const UserCanvasContainer = () => {
-        const [textRange, setTextRange] = useState("");
-  const [sentText,setSentText]  = useState("");
-  const [image,setImage] = useState("");
-  const [svg,setSvg] = useState<any>(null);
+export const UserCanvasContainer = () => (
+  <>
+    <CanvasAndButtonContainer>
+      <ButtonsContainer>
+      <CircleButton/>
+      <CircleButton/>
+      <br/>
+      <CircleButton/>
+      <CircleButton/>
+      <br/>
+      <CircleButton/>
+      <CircleButton/>
+      <br/>
+      <CircleButton/>
+      <CircleButton/>
+      <CircleButton/>
+      <CircleButton/>
+      <CircleButton/>
+      
+      </ButtonsContainer>
+      <UserAreaContainer>
+      <UserContainer>
+        <p>callum</p>
+        <p>rowan</p>
+      </UserContainer>
+        <UserInputContainer>
+          <Canvas />
+          <InputContainer>
+            <KeyboardContainer></KeyboardContainer>
+            <SendButtonsContainer></SendButtonsContainer>
+          </InputContainer>
+        </UserInputContainer>
+      </UserAreaContainer>
+    </CanvasAndButtonContainer>
+  </>
+)
 
-  const grabSvg = (data:any) => {
-    setSvg(data)
-  }
-
-  const saveImage = (data:string) => {
-    setImage(data);
-    console.log(textRange)
-  }
-
-  const returnSvg = (el:any,paths:any) => {
-    el.canvas.current.loadPaths(paths)
-
-  }
-
-  useEffect(()=>{
-    setSentText(textRange)
-    setTextRange("")
-  },[image])
-
-  return (
-    <>
-        <div style={{position:"relative", width:"100%",display:"flex",justifyContent: "center",alignItems: "center",flexDirection:"column"}}>
-
-    <CanvasContainer style={{backgroundImage: `url(${image})`,backgroundSize:"cover", border: `3px solid gray`,
-          borderRadius: '8px'}}>
-    <TextContainer color="red" style={{left:-3, top: -3}}>
-      <div><h2>callum</h2></div>
-          <p>{sentText}</p> 
-        </TextContainer>
-    </CanvasContainer>
-    </div>
-
-    <br/><br/><br/><br/><br/><br/>
-
-    <div style={{position:"relative", width:"100%",display:"flex",justifyContent: "center",alignItems: "center",flexDirection:"column"}}>
-        <CanvasContainer>
-
-  
-
-        <Canvas saveImage={saveImage} grabSvg={grabSvg} returnSvg={returnSvg}/>
-        <TextContainer style={{    pointerEvents: "none"}}>
-          <div><h2>callum</h2></div>
-          <p>{textRange}</p> 
-        </TextContainer>
-       
-        </CanvasContainer>
-        
-
-        </div>
-        <br/><br/><br/> <br/><br/><br/>
-        <input onChange={(e:any)=>setTextRange(e.target.value)}/>
-    </>
-  );
-}
-
-
-const TextContainer = styled.div`
-  & *{
-    display: inline;
-    vertical-align: top;
-    line-height: 43px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  & div{
-    border: 3px solid gray;
-    display: inline-block;
-    width: 150px;
-    height:40px;
-    text-align: center;
-    border-top-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    background-color:white;
-  }
+const CircleButton = styled.div`
+  width:28px;
+  height:28px;
+  margin-bottom: 3px;
+  background:lightgray;
+  border-radius: 50%;
 `
 
-const CanvasContainer = styled.div`
-  position:relative;
+const UserContainer = styled.div`
+  height:30px; width:100%;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap:20px;
+  margin-right:20px;
+`
+
+const UserAreaContainer = styled.div`
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`
+
+const ButtonsContainer = styled.div`
+  width: 35px;
+  height: 415px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+`
+
+const CanvasAndButtonContainer = styled.div`
   width: 100%;
-  max-width: 601px;
-  height: 215px;
+  max-width: 480px;
+  background:white;
+  height: 415px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+`
 
-  &>*{
-    position:absolute;
-    left:0;
-      
-  }
+const  UserInputContainer = styled.div`
+  background:#AAAAB3;
+  width:100%;
+  max-width:450px;
+  height:380px;
+  border-radius: 10px;
+  display:flex;
+  flex-direction: column;
+`
 
-  & p, h2{
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
-    
-  }
+const KeyboardContainer = styled.div`
+  height:170px;
+  width:100%;
+  background:white;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-right:10px;
+  border-radius: 8px;
+`
 
+const InputContainer = styled.div`
+  display:flex;
+  width:100%;
+  height:230px;
+  flex-grow: 1;
+`
+
+const SendButtonsContainer = styled.div`
+  height:164px;
+  width:97px;
+  background:#D9D9D9;
+  border-left: 3px solid white;
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  margin-top: 20px;
 
 `
