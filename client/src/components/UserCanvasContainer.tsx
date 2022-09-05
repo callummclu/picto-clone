@@ -151,6 +151,10 @@ const ButtonsContainer = styled.div`
   align-items: center;
   justify-content: center;
 
+  @media screen and (max-width: 600px){
+    height:442px;
+  }
+
 `
 
 const CanvasAndButtonContainer = styled.div`
