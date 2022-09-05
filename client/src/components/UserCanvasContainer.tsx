@@ -4,6 +4,23 @@ import { Canvas } from './UserCanvas';
 
 export const UserCanvasContainer = () => (
   <>
+   <Centered>
+    <MessagesContainer>
+      <MessageMiniMap>
+      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      </MessageMiniMap>
+      <PreviousMessagesContainer>
+      <PreviousMessage className="canvas"/>
+      <PreviousMessage className="canvas"/>
+      <PreviousMessage className="canvas"/>
+      </PreviousMessagesContainer>
+    </MessagesContainer>
+
     <CanvasAndButtonContainer>
       <ButtonsContainer>
       <CircleButton/>
@@ -23,10 +40,16 @@ export const UserCanvasContainer = () => (
       
       </ButtonsContainer>
       <UserAreaContainer>
-      <UserContainer>
-        <p>callum</p>
-        <p>rowan</p>
-      </UserContainer>
+        <UserContainer>
+        <UserBox>
+            <UserColorBox/>
+            <p>Callum</p>
+          </UserBox>
+          <UserBox>
+            <UserColorBox/>
+            <p>Rowan</p>
+          </UserBox>
+        </UserContainer>
         <UserInputContainer>
           <Canvas />
           <InputContainer>
@@ -36,8 +59,65 @@ export const UserCanvasContainer = () => (
         </UserInputContainer>
       </UserAreaContainer>
     </CanvasAndButtonContainer>
+    </Centered>
   </>
 )
+
+const UserColorBox = styled.div`
+  width:15px;
+  height:15px;
+  background: gray;
+`
+
+const UserBox = styled.div`
+  border: 2px dotted gray;
+  padding-left:5px;
+  padding-right:5px;
+  display: flex;
+  height:20px;
+  gap:10px;
+  justify-content: center;
+  align-items: center;
+`
+
+const PreviousMessage = styled.div`
+  width: calc(100% - 20px);
+  height: 200px;
+  background-color: white;
+  border-radius: 8px;
+  min-height: 200px;
+  margin-right: 5px;
+  border:3px solid gray;
+`
+
+const PreviousMessagesContainer = styled.div`
+padding-top: 10px;
+padding-bottom:10px;
+
+  width:100%;
+  height:calc(100% - 20px);
+  overflow-y:auto;
+  display: flex;
+  gap:10px;
+  flex-direction: column;
+  align-items:flex-end;
+
+`
+
+const MessageBlip = styled.div`
+  width: 25px;
+  height: 5px;
+  background:gray;
+  margin-bottom: 5px;
+`
+
+const Centered = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+`
 
 const CircleButton = styled.div`
   width:28px;
@@ -52,8 +132,8 @@ const UserContainer = styled.div`
   display:flex;
   justify-content: flex-end;
   align-items: center;
-  gap:20px;
-  margin-right:20px;
+  gap:10px;
+  margin-right:10px;
 `
 
 const UserAreaContainer = styled.div`
@@ -78,6 +158,30 @@ const CanvasAndButtonContainer = styled.div`
   max-width: 480px;
   background:white;
   height: 415px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+`
+
+const MessageMiniMap = styled.div`
+  width: 35px;
+  height: 250px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background:white;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+
+`
+
+const MessagesContainer = styled.div`
+  width: 100%;
+  max-width: 480px;
+  background:#AAAAB3;
+  border-radius: 8px;
+  height: 250px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
