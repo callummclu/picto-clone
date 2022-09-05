@@ -43,7 +43,7 @@ export const UserCanvasContainer = () => {
 
     <div style={{position:"relative", width:"100%",display:"flex",justifyContent: "center",alignItems: "center",flexDirection:"column"}}>
       <CanvasContainer>
-      <TextContainer color="red">
+      <TextContainer >
       <div><h2>callum</h2></div>
           <p>{textRange}</p> 
         </TextContainer>

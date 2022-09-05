@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components'
-import { UserCanvasContainer } from './components/UserCanvasContainer';
+import { UserContainer } from './components/UserContainer';
 
 
 function App() {
 
   return (
-    <UserCanvasContainer/>
+    <UserContainer/>
   )
 }
 
