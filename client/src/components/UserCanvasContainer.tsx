@@ -19,6 +19,7 @@ export const UserCanvasContainer = () => {
 
   const returnSvg = (el:any,paths:any) => {
     el.canvas.current.loadPaths(paths)
+
   }
 
   useEffect(()=>{
@@ -42,40 +43,35 @@ export const UserCanvasContainer = () => {
     <br/><br/><br/><br/><br/><br/>
 
     <div style={{position:"relative", width:"100%",display:"flex",justifyContent: "center",alignItems: "center",flexDirection:"column"}}>
-      <CanvasContainer>
-      <TextContainer >
-      <div><h2>callum</h2></div>
+        <CanvasContainer>
+
+  
+
+        <Canvas saveImage={saveImage} grabSvg={grabSvg} returnSvg={returnSvg}/>
+        <TextContainer style={{    pointerEvents: "none"}}>
+          <div><h2>callum</h2></div>
           <p>{textRange}</p> 
         </TextContainer>
-        <Canvas saveImage={saveImage} grabSvg={grabSvg} returnSvg={returnSvg}/>
-        <TextContainer>
-          <div><h2>callum</h2></div>
-          <p></p> 
-        </TextContainer>
+       
+        </CanvasContainer>
         
-      </CanvasContainer>
 
-<br/>
-      <br/>
-      <input onChange={(e:any)=>setTextRange(e.target.value)}/>
-      
-    </div>
+        </div>
+        <br/><br/><br/> <br/><br/><br/>
+        <input onChange={(e:any)=>setTextRange(e.target.value)}/>
     </>
   );
 }
 
 
 const TextContainer = styled.div`
-
-
   & *{
     display: inline;
     vertical-align: top;
     line-height: 43px;
     word-wrap: break-word;
-white-space: pre-wrap;
-word-break: break-word;
-
+    white-space: pre-wrap;
+    word-break: break-word;
   }
   & div{
     border: 3px solid gray;
@@ -86,7 +82,6 @@ word-break: break-word;
     border-top-left-radius: 8px;
     border-bottom-right-radius: 8px;
     background-color:white;
-
   }
 `
 
@@ -99,6 +94,7 @@ const CanvasContainer = styled.div`
   &>*{
     position:absolute;
     left:0;
+      
   }
 
   & p, h2{
@@ -106,7 +102,7 @@ const CanvasContainer = styled.div`
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
-    pointer-events: none;
+    
   }
 
 

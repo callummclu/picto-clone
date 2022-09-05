@@ -12,7 +12,3 @@ export const UserContainer = () => {
     )
 }
 
-
-const UserContainerDiv = styled.div`
-    display: flex;
-`

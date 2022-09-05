@@ -10,6 +10,7 @@ export const Canvas = class extends React.Component<any,any> {
     grabSvg: Function;
     returnSvg: Function;
 
+
     constructor(props:any) {
       super(props);
       this.grabSvg = props.grabSvg
