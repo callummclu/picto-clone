@@ -161,6 +161,10 @@ const CanvasAndButtonContainer = styled.div`
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 600px){
+    height:442px;
+  }
 `
 
 const MessageMiniMap = styled.div`
@@ -195,11 +199,15 @@ const  UserInputContainer = styled.div`
   border-radius: 10px;
   display:flex;
   flex-direction: column;
+
+  @media screen and (max-width: 600px){
+    height:402px;
+  }
 `
 
 const KeyboardContainer = styled.div`
-  height:170px;
   width:100%;
+  max-height: 170px;
   background:white;
   margin-left: 10px;
   margin-top: 20px;
