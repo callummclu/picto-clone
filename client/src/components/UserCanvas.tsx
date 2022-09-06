@@ -25,7 +25,9 @@ export const Canvas = class extends React.Component<any,any> {
     penMode(){
       this.canvas.current.eraseMode(false)
     }
-    clearCanvas(){}
+    clearCanvas(){
+      this.canvas.current.clearCanvas()
+    }
     saveSvg(){}
     fillSvg(){}
 

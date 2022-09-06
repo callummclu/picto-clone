@@ -7,6 +7,8 @@ import { Canvas } from './UserCanvas';
 export const UserCanvasContainer = () => {
 
   const [userInput,setUserInput] = useState("")
+  const [penType, setPenType] = useState(true)
+  const [penWidth, setPenWidth] = useState(true)
 
   const userCanvas = useRef<any>();
   
@@ -34,12 +36,12 @@ return(
       <CircleButton/>
       <CircleButton/>
       <br/>
-      <CircleButton onClick={()=> userCanvas.current.penMode()}><PenToolIcon/></CircleButton>
-      <CircleButton onClick={()=> userCanvas.current.eraseMode()}><EraserToolIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${penType ? 'lightblue' : 'lightgray'}`}} onClick={()=> {userCanvas.current.penMode(); setPenType(true)}}><PenToolIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${!penType ? 'lightblue': 'lightgray'}`}} onClick={()=> {userCanvas.current.eraseMode(); setPenType(false)}}><EraserToolIcon/></CircleButton>
 
       <br/>
-      <CircleButton onClick={()=> userCanvas.current.smallPenMode()}><SmallBrushIcon/></CircleButton>
-      <CircleButton onClick={()=> userCanvas.current.bigPenMode()}><BigBrushIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${penWidth ? 'lightblue' : 'lightgray'}`}} onClick={()=> {userCanvas.current.smallPenMode(); setPenWidth(true)}}><SmallBrushIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${!penWidth ? 'lightblue': 'lightgray'}`}} onClick={()=> {userCanvas.current.bigPenMode(); setPenWidth(false)}}><BigBrushIcon/></CircleButton>
       <br/>
       <CircleButton/>
       <CircleButton/>
@@ -74,7 +76,7 @@ return(
             <SendButtonsContainer>
               <SendButton className="send"><SendIcon/></SendButton>
               <SendButton className="pull"><PullIcon/></SendButton>
-              <SendButton className="clear"><ClearIcon/></SendButton>
+              <SendButton className="clear"  onClick={()=> userCanvas.current.clearCanvas()}><ClearIcon/></SendButton>
             </SendButtonsContainer>
           </InputContainer>
         </UserInputContainer>
