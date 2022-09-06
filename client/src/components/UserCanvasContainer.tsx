@@ -15,8 +15,11 @@ export const UserCanvasContainer = () => {
   const sendMessage = async () => {
     let message = {
       text: userInput,
-      paths: await userCanvas.current.grabSvg()
+      svg: await userCanvas.current.grabSvg()
     }
+
+
+    /* SEND MESSAGE TO BACKEND */
 
     console.log(message)
   }
