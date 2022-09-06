@@ -76,7 +76,7 @@ return(
             <SendButtonsContainer>
               <SendButton className="send"><SendIcon/></SendButton>
               <SendButton className="pull"><PullIcon/></SendButton>
-              <SendButton className="clear"  onClick={()=> userCanvas.current.clearCanvas()}><ClearIcon/></SendButton>
+              <SendButton className="clear"  onClick={()=> {userCanvas.current.clearCanvas(); setUserInput("")}}><ClearIcon/></SendButton>
             </SendButtonsContainer>
           </InputContainer>
         </UserInputContainer>
@@ -142,9 +142,14 @@ const SendButton = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   & svg {
     height: 90%;
+  }
+
+  &:hover{
+    filter: brightness(105%);
   }
 `
 
@@ -220,6 +225,11 @@ const CircleButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+
+  &:hover{
+    filter: brightness(105%);
+  }
 
   & svg{
     padding:5px;

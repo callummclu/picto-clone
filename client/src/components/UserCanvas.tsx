@@ -28,7 +28,7 @@ export const Canvas = class extends React.Component<any,any> {
     clearCanvas(){
       this.canvas.current.clearCanvas()
     }
-    saveSvg(){}
+    grabSvg(){}
     fillSvg(){}
 
 
