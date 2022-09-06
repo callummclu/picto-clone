@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIcon, SmallBrushIcon } from '../icons/CanvasIcons';
+import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
 
-export const UserCanvasContainer = () => (
+export const UserCanvasContainer = () => {
+
+  const [userInput,setUserInput] = useState("")
+ 
+return(
   <>
    <Centered>
     <MessagesContainer>
@@ -26,11 +32,12 @@ export const UserCanvasContainer = () => (
       <CircleButton/>
       <CircleButton/>
       <br/>
-      <CircleButton/>
-      <CircleButton/>
+      <CircleButton><PenToolIcon/></CircleButton>
+      <CircleButton><EraserToolIcon/></CircleButton>
+
       <br/>
-      <CircleButton/>
-      <CircleButton/>
+      <CircleButton><SmallBrushIcon/></CircleButton>
+      <CircleButton><BigBrushIcon/></CircleButton>
       <br/>
       <CircleButton/>
       <CircleButton/>
@@ -51,10 +58,22 @@ export const UserCanvasContainer = () => (
           </UserBox>
         </UserContainer>
         <UserInputContainer>
-          <Canvas />
+          <CanvasContainer>
+            <Canvas />
+            <CanvasTextContainer>
+              <p><div><h3>callum</h3></div>
+              {userInput}</p>
+            </CanvasTextContainer>
+          </CanvasContainer>
           <InputContainer>
-            <KeyboardContainer></KeyboardContainer>
-            <SendButtonsContainer></SendButtonsContainer>
+            <KeyboardContainer>
+              <Keys contentState={[userInput,setUserInput]}/>
+            </KeyboardContainer>
+            <SendButtonsContainer>
+              <SendButton className="send"><SendIcon/></SendButton>
+              <SendButton className="pull"><PullIcon/></SendButton>
+              <SendButton className="clear"><ClearIcon/></SendButton>
+            </SendButtonsContainer>
           </InputContainer>
         </UserInputContainer>
       </UserAreaContainer>
@@ -62,6 +81,68 @@ export const UserCanvasContainer = () => (
     </Centered>
   </>
 )
+}
+
+const CanvasTextContainer = styled.div`
+  position:absolute;
+  top:0;
+  width: calc(100% - 30px);
+  left: 16px;
+  height: calc(100%);
+  user-select: none;
+  pointer-events: none;
+  display: flex;
+
+  & div {
+    min-width: 100px;
+    height: 30px;
+    border: 3px solid gray;
+    border-top: 2px solid gray;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    display: inline-block;
+    text-align: center;
+    line-height: 0;
+    background: white;
+    margin-left: -5px;
+
+    & h3 {
+      margin-top: 15px;
+      font-size: 20px;
+    }
+  }
+
+  & p {
+    margin-top: 1px;
+    line-height: 30px;
+    padding-left:5px;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+  }
+
+`
+
+const CanvasContainer = styled.div`
+  position:relative;
+  display:flex;
+  width:100%;
+  margin-top: 16px;
+  margin-left: 10px;
+  justify-content: flex-end;
+`
+
+const SendButton = styled.div`
+  background-color: #D9D9D9;
+  width:100%;
+  height: 33%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+  & svg {
+    height: 90%;
+  }
+`
 
 const UserColorBox = styled.div`
   width:15px;
@@ -93,6 +174,13 @@ const PreviousMessage = styled.div`
 const PreviousMessagesContainer = styled.div`
 padding-top: 10px;
 padding-bottom:10px;
+position: relative;
+bottom:0;
+
+ &::-webkit-scrollbar {
+    display: none;
+}
+
 
   width:100%;
   height:calc(100% - 20px);
@@ -125,6 +213,13 @@ const CircleButton = styled.div`
   margin-bottom: 3px;
   background:lightgray;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & svg{
+    padding:5px;
+  }
 `
 
 const UserContainer = styled.div`
@@ -145,14 +240,14 @@ const UserAreaContainer = styled.div`
 
 const ButtonsContainer = styled.div`
   width: 35px;
-  height: 415px;
+  height: 395px;
   display:flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   @media screen and (max-width: 600px){
-    height:442px;
+    height:390px;
   }
 
 `
@@ -161,13 +256,13 @@ const CanvasAndButtonContainer = styled.div`
   width: 100%;
   max-width: 480px;
   background:white;
-  height: 415px;
+  height: 395px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
 
   @media screen and (max-width: 600px){
-    height:442px;
+    height:390px;
   }
 `
 
@@ -199,24 +294,36 @@ const  UserInputContainer = styled.div`
   background:#AAAAB3;
   width:100%;
   max-width:450px;
-  height:380px;
+  height:358px;
   border-radius: 10px;
   display:flex;
   flex-direction: column;
+  align-items: flex-end;
+
+  & div:first-child{
+    margin-right: 5px;
+  }
 
   @media screen and (max-width: 600px){
-    height:402px;
+    height:352px;
   }
 `
 
 const KeyboardContainer = styled.div`
   width:100%;
-  max-height: 170px;
+  max-height: 148px;
   background:white;
+  background-image: url("https://i.imgur.com/QkNhB5p.png");
+  background-size: contain;
+
   margin-left: 10px;
   margin-top: 20px;
   margin-right:10px;
-  border-radius: 8px;
+  border-radius: 15px;
+
+  @media screen and (max-width: 600px){
+    max-height:120.5px;
+  }
 `
 
 const InputContainer = styled.div`
@@ -227,14 +334,27 @@ const InputContainer = styled.div`
 `
 
 const SendButtonsContainer = styled.div`
-  height:164px;
-  width:97px;
-  background:#D9D9D9;
-  border-left: 3px solid white;
-  border-top: 3px solid white;
-  border-bottom: 3px solid white;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  height:150px;
+  width:80px;
+  background:white;
+  border-top-left-radius: 15px;
+  overflow: hidden;
+  border-bottom-left-radius: 15px;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap:2px;
+
+  & .clear {height:24%;padding-top: 7px;padding-bottom: 6px}
+  & .send {height: 35%}
+  & .pull {height: 24%;padding-top: 7px;padding-bottom: 6px}
+
+  @media screen and (max-width: 600px){
+    max-height:120.5px;
+
+    & .clear {padding-top: 4px;padding-bottom: 3px}
+  & .send {padding-top: 2px;padding-bottom: 1px}
+  & .pull {padding-top: 4px;padding-bottom: 3px}
+  }
 
 `

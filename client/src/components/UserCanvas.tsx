@@ -19,11 +19,10 @@ export const Canvas = class extends React.Component<any,any> {
                 border: `3px solid gray`,
                 borderRadius: '8px',
                 backgroundSize:'contain',
-                height:180,
                 backgroundColor:"white",
-                marginTop: '16px',
-                marginLeft:'10px',
-                width:"calc(100% - 30px)"
+                marginLeft: '10px',
+                marginRight: 0,
+                width:"calc(100% - 22px)"
             }}
             ref={this.canvas}
             strokeWidth={5}
