@@ -11,6 +11,15 @@ export const UserCanvasContainer = () => {
   const [penWidth, setPenWidth] = useState(true)
 
   const userCanvas = useRef<any>();
+
+  const sendMessage = async () => {
+    let message = {
+      text: userInput,
+      paths: await userCanvas.current.grabSvg()
+    }
+
+    console.log(message)
+  }
   
 return(
   <>
@@ -74,7 +83,7 @@ return(
               <Keys contentState={[userInput,setUserInput]}/>
             </KeyboardContainer>
             <SendButtonsContainer>
-              <SendButton className="send"><SendIcon/></SendButton>
+              <SendButton className="send" onClick={sendMessage}><SendIcon/></SendButton>
               <SendButton className="pull"><PullIcon/></SendButton>
               <SendButton className="clear"  onClick={()=> {userCanvas.current.clearCanvas(); setUserInput("")}}><ClearIcon/></SendButton>
             </SendButtonsContainer>
@@ -214,6 +223,7 @@ const Centered = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
+  height: calc(100vh - 50px);
 `
 
 const CircleButton = styled.div`

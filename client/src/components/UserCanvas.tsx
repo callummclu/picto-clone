@@ -28,8 +28,12 @@ export const Canvas = class extends React.Component<any,any> {
     clearCanvas(){
       this.canvas.current.clearCanvas()
     }
-    grabSvg(){}
-    fillSvg(){}
+    grabSvg(){
+      return this.canvas.current.exportPaths()
+    }
+    fillSvg(paths:any){
+      this.canvas.current.loadPaths(paths)
+    }
 
 
     render() {
