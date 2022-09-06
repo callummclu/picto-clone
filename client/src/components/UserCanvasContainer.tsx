@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIcon, SmallBrushIcon } from '../icons/CanvasIcons';
 import { Keys } from './Keys';
@@ -7,7 +7,9 @@ import { Canvas } from './UserCanvas';
 export const UserCanvasContainer = () => {
 
   const [userInput,setUserInput] = useState("")
- 
+
+  const userCanvas = useRef<any>();
+  
 return(
   <>
    <Centered>
@@ -32,12 +34,12 @@ return(
       <CircleButton/>
       <CircleButton/>
       <br/>
-      <CircleButton><PenToolIcon/></CircleButton>
-      <CircleButton><EraserToolIcon/></CircleButton>
+      <CircleButton onClick={()=> userCanvas.current.penMode()}><PenToolIcon/></CircleButton>
+      <CircleButton onClick={()=> userCanvas.current.eraseMode()}><EraserToolIcon/></CircleButton>
 
       <br/>
-      <CircleButton><SmallBrushIcon/></CircleButton>
-      <CircleButton><BigBrushIcon/></CircleButton>
+      <CircleButton onClick={()=> userCanvas.current.smallPenMode()}><SmallBrushIcon/></CircleButton>
+      <CircleButton onClick={()=> userCanvas.current.bigPenMode()}><BigBrushIcon/></CircleButton>
       <br/>
       <CircleButton/>
       <CircleButton/>
@@ -59,7 +61,7 @@ return(
         </UserContainer>
         <UserInputContainer>
           <CanvasContainer>
-            <Canvas />
+            <Canvas ref={userCanvas}/>
             <CanvasTextContainer>
               <p><div><h3>callum</h3></div>
               {userInput}</p>

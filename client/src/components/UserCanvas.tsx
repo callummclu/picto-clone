@@ -7,8 +7,28 @@ export const Canvas = class extends React.Component<any,any> {
     constructor(props:any) {
       super(props);
       this.canvas = React.createRef();
+      this.state = {strokeWidth: 3}
 
     }
+
+    bigPenMode(){
+      this.setState({...this.state, strokeWidth: 7})
+    }
+
+    smallPenMode(){
+      this.setState({...this.state, strokeWidth: 3})
+    }
+
+    eraseMode(){
+      this.canvas.current.eraseMode(true)
+    }
+    penMode(){
+      this.canvas.current.eraseMode(false)
+    }
+    clearCanvas(){}
+    saveSvg(){}
+    fillSvg(){}
+
 
     render() {
       return (
@@ -25,7 +45,7 @@ export const Canvas = class extends React.Component<any,any> {
                 width:"calc(100% - 22px)"
             }}
             ref={this.canvas}
-            strokeWidth={5}
+            strokeWidth={this.state.strokeWidth}
             strokeColor="black"
             backgroundImage='https://i.imgur.com/UWSVFu3.png'
           />
