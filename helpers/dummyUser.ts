@@ -1,7 +1,7 @@
 const c_users:any = []
 
-export function join_User(id:string, username:string, room:string){
-    const p_user = {id,username,room}
+export function join_User(id:string, username:string, room:string,color:string){
+    const p_user = {id,username,room,color}
 
     c_users.push(p_user)
     console.log(c_users, "users")

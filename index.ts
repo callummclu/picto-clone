@@ -4,6 +4,7 @@ import color, { reset } from 'colors'
 import http from 'http'
 import cors from 'cors'
 import { get_Current_User, user_Disconnect, join_User} from './helpers/dummyUser'
+import randomColor from 'randomColor'
 const app = express();
 
 const server = http.createServer(app)
@@ -17,7 +18,7 @@ const io = new Server(server, {
 io.on("connect", (socket:any) => {
     socket.on("joinRoom", ({username, roomname}:{username:string, roomname:string}) =>{
         // CREATE USER
-        const p_user = join_User(socket.id, username, roomname)
+        const p_user = join_User(socket.id, username, roomname,randomColor())
         socket.join(p_user.room)
 
         //display a welcome message to the user who have joined a room
@@ -32,6 +33,8 @@ io.on("connect", (socket:any) => {
             userId: p_user.id,
             username: p_user.username,
             text: `${p_user.username} has joined the chat`,
+            color: p_user.color
+
           });
       
     } )
@@ -43,7 +46,8 @@ io.on("connect", (socket:any) => {
           userId: p_user.id,
           username: p_user.username,
           text: text,
-          svg
+          svg,
+          color: p_user.color
         });
       });
 
