@@ -1,12 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components'
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserContainer } from './components/UserContainer';
+import { Home } from './pages/Home';
 import './styles/mainStyles.css'
+import {io} from 'socket.io-client'
 
 function App() {
-
   return (
-    <UserContainer/>
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<Home/>}/>
+        <Route path="/chat" element={<UserContainer />}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

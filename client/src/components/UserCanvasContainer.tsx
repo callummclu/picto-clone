@@ -1,16 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import { io } from 'socket.io-client';
 import styled from 'styled-components';
 import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIcon, SmallBrushIcon } from '../icons/CanvasIcons';
 import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
+
 
 export const UserCanvasContainer = () => {
 
   const [userInput,setUserInput] = useState("")
   const [penType, setPenType] = useState(true)
   const [penWidth, setPenWidth] = useState(true)
+  const [messages, setMessages] = useState<any>([])
+  const [socket] = useState(() => io('ws://localhost:5000'))
 
   const userCanvas = useRef<any>();
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { username, roomname } = useParams()
+
+
+
+  useEffect(()=>{
+    socket.emit('joinRoom',{username:searchParams.get("username"), roomname: searchParams.get("roomname")})
+  },[])
+
+
 
   const sendMessage = async () => {
     let message = {
@@ -18,28 +35,32 @@ export const UserCanvasContainer = () => {
       svg: await userCanvas.current.grabSvg()
     }
 
-
+    await socket.emit("chat",message)
     /* SEND MESSAGE TO BACKEND */
-
-    console.log(message)
   }
+
+  useEffect(()=>{
+    if(!socket) return
+    socket.on('message', (recv:any) => {
+      setMessages((oldArray:any) => oldArray.length > 0 ? [...oldArray, recv] : [recv])
+    })
+  },[])
   
 return(
   <>
    <Centered>
     <MessagesContainer>
       <MessageMiniMap>
-      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
-      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
-      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
-      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
-      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
-      <MessageBlip/><MessageBlip/><MessageBlip/><MessageBlip/>
+      {messages.length < 24 ? messages.map((message:any)=><MessageBlip/>) : messages.slice(0, 24).map((message:any) => <MessageBlip/>)}
       </MessageMiniMap>
       <PreviousMessagesContainer>
-      <PreviousMessage className="canvas"/>
-      <PreviousMessage className="canvas"/>
-      <PreviousMessage className="canvas"/>
+        {messages.map((message:any)=>{
+          return (
+            <PreviousMessage className='canvas'>
+              {JSON.stringify(message)}
+            </PreviousMessage>
+          )
+        })}
       </PreviousMessagesContainer>
     </MessagesContainer>
 

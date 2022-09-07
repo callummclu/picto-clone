@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CanvasControls } from './CanvasControls';
 import { UserCanvasContainer } from './UserCanvasContainer';
 
-export const UserContainer = () => {
+export const UserContainer = (props:any) => {
 
     return (
         <>
