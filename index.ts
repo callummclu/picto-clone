@@ -18,7 +18,6 @@ io.on("connect", (socket:any) => {
     socket.on("joinRoom", ({username, roomname}:{username:string, roomname:string}) =>{
         // CREATE USER
         const p_user = join_User(socket.id, username, roomname)
-        console.log(socket.id, "=id")
         socket.join(p_user.room)
 
         //display a welcome message to the user who have joined a room
@@ -40,9 +39,6 @@ io.on("connect", (socket:any) => {
     socket.on("chat", ({text,svg}:{text:string, svg:any}) => {
         //gets the room user and the message sent
         const p_user = get_Current_User(socket.id);
-    
-        console.log(p_user.username,":",text)
-
         io.to(p_user.room).emit("message", {
           userId: p_user.id,
           username: p_user.username,
