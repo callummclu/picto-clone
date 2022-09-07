@@ -34,7 +34,9 @@ export const Canvas = class extends React.Component<any,any> {
     fillSvg(paths:any){
       this.canvas.current.loadPaths(paths)
     }
-
+    grabImage(){
+      return this.canvas.current.exportImage("png")
+    }
 
     render() {
       return (

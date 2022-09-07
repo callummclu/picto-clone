@@ -32,7 +32,8 @@ export const UserCanvasContainer = () => {
   const sendMessage = async () => {
     let message = {
       text: userInput,
-      svg: await userCanvas.current.grabSvg()
+      svg: await userCanvas.current.grabSvg(),
+      image: await userCanvas.current.grabImage()
     }
 
     await socket.emit("chat",message)
@@ -44,6 +45,9 @@ export const UserCanvasContainer = () => {
     socket.on('message', (recv:any) => {
       setMessages((oldArray:any) => oldArray.length > 0 ? [...oldArray, recv] : [recv])
     })
+
+
+
   },[])
   
 return(
@@ -56,8 +60,9 @@ return(
       <PreviousMessagesContainer>
         {messages.map((message:any)=>{
           return (
-            <PreviousMessage className='canvas'>
-              {JSON.stringify(message)}
+            <PreviousMessage className='canvas' style={{backgroundImage: `url(${message.image})`, borderColor: message.color}}>
+              <h1>{message.username}</h1>
+              <p>{message.text}</p>
             </PreviousMessage>
           )
         })}

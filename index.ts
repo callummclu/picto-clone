@@ -33,13 +33,13 @@ io.on("connect", (socket:any) => {
             userId: p_user.id,
             username: p_user.username,
             text: `${p_user.username} has joined the chat`,
-            color: p_user.color
+            color: p_user.color,
 
           });
       
     } )
 
-    socket.on("chat", ({text,svg}:{text:string, svg:any}) => {
+    socket.on("chat", ({text,svg,image}:{text:string, svg:any,image:string}) => {
         //gets the room user and the message sent
         const p_user = get_Current_User(socket.id);
         io.to(p_user.room).emit("message", {
@@ -47,7 +47,8 @@ io.on("connect", (socket:any) => {
           username: p_user.username,
           text: text,
           svg,
-          color: p_user.color
+          color: p_user.color,
+          image
         });
       });
 
