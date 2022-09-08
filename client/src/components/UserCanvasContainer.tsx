@@ -1,3 +1,4 @@
+import { cleanup } from '@testing-library/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
@@ -15,6 +16,8 @@ export const UserCanvasContainer = () => {
   const [penWidth, setPenWidth] = useState(true)
   const [messages, setMessages] = useState<any>([])
   const [socket] = useState(() => io('ws://localhost:5000'))
+  const [userColor,setUserColor] = useState("gray")
+  const [userUsername, setUserUsername] = useState("")
 
   const userCanvas = useRef<any>();
 
@@ -25,6 +28,10 @@ export const UserCanvasContainer = () => {
 
   useEffect(()=>{
     socket.emit('joinRoom',{username:searchParams.get("username"), roomname: searchParams.get("roomname")})
+
+    return () => {
+      socket.emit('leave room')
+    }
   },[])
 
 
@@ -40,13 +47,10 @@ export const UserCanvasContainer = () => {
   }
 
   useEffect(()=>{
-    if(!socket) return
     socket.on('message', (recv:any) => {
-      setMessages((oldArray:any) => oldArray.length > 0 ? [...oldArray, recv] : [recv])
+      setMessages((om:any)=>[...om, recv])
     })
-
-
-
+    console.log('i fire once');
   },[])
   
 return(

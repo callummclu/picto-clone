@@ -50,9 +50,10 @@ io.on("connect", (socket:any) => {
           color: p_user.color,
           image
         });
+        console.log(text)
       });
 
-      socket.on("disconnect", () => {
+      socket.on("leave room", () => {
         //the user is deleted from array of users and a left room message displayed
         const p_user = user_Disconnect(socket.id);
     
