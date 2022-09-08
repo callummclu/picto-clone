@@ -111,11 +111,7 @@ return(
         <UserContainer>
         <UserBox>
             <UserColorBox/>
-            <p>Callum</p>
-          </UserBox>
-          <UserBox>
-            <UserColorBox/>
-            <p>Rowan</p>
+            <p>{searchParams.get('username')}</p>
           </UserBox>
         </UserContainer>
         <UserInputContainer>
