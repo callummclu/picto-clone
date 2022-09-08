@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "prestart": "npm run build",
+    "prestart": "npm i && npm run build",
     "start": "node .",
     "startHost": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
