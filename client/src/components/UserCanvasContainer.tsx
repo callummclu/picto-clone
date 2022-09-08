@@ -122,7 +122,7 @@ return(
           <CanvasContainer>
             <Canvas ref={userCanvas}/>
             <CanvasTextContainer>
-              <p><div><h3>callum</h3></div>
+              <p><div><h3>{searchParams.get('username')}</h3></div>
               {userInput}</p>
             </CanvasTextContainer>
           </CanvasContainer>
