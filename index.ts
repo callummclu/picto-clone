@@ -4,10 +4,36 @@ import color, { reset } from 'colors'
 import http from 'http'
 import cors from 'cors'
 import { get_Current_User, user_Disconnect, join_User} from './helpers/dummyUser'
-import randomColor from 'randomColor'
 const app = express();
 
 const server = http.createServer(app)
+
+const randomColors = [
+  "#1345bd",    
+  "#a21e6d", 
+  "#c9a602", 
+  "#664261", 
+  "#bd85c6", 
+  "#f894ba", 
+  "#0a01fe", 
+  "#f9c059", 
+  "#3f4f49", 
+  "#ae9e81", 
+  "#9dd7c3", 
+  "#58bcd4", 
+  "#f90e18", 
+  "#cb4ce9", 
+  "#588151", 
+  "#7fd3a2", 
+  "#ba67fc", 
+  "#ddbbc0", 
+  "#aec15c", 
+  "#85eedf", 
+  "#b95ecd"
+]
+
+const randomColor = () => randomColors[Math.floor(Math.random() * randomColors.length)]
+
 
 const io = new Server(server, {
     cors: {
