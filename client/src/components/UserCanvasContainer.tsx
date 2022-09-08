@@ -388,6 +388,10 @@ const KeyboardContainer = styled.div`
 
   @media screen and (max-width: 600px){
     max-height:120.5px;
+
+    & *{
+      display: none;
+    }
   }
 `
 
