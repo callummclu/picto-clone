@@ -30,6 +30,7 @@ export const UserCanvasContainer = () => {
     socket.emit('joinRoom',{username:searchParams.get("username"), roomname: searchParams.get("roomname")})
 
     return () => {
+      // THIS NEEDS FIXED
       socket.emit('leave room')
     }
   },[])
@@ -121,7 +122,7 @@ return(
             </KeyboardContainer>
             <SendButtonsContainer>
               <SendButton className="send" onClick={sendMessage}><SendIcon/></SendButton>
-              <SendButton className="pull"><PullIcon/></SendButton>
+              <SendButton className="pull" onClick={() => {userCanvas.current.fillSvg(messages.filter((msg:any)=>msg.type == "message").at(-1).svg); setUserInput(messages.filter((msg:any)=>msg.type == "message").at(-1).text)}}><PullIcon/></SendButton>
               <SendButton className="clear"  onClick={()=> {userCanvas.current.clearCanvas(); setUserInput("")}}><ClearIcon/></SendButton>
             </SendButtonsContainer>
           </InputContainer>
