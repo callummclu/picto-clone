@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIcon, SmallBrushIcon } from '../icons/CanvasIcons';
 import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
+import {isMobile, isMobileSafari} from 'react-device-detect';
+
 
 
 export const UserCanvasContainer = () => {
@@ -27,6 +29,11 @@ export const UserCanvasContainer = () => {
 
 
   useEffect(()=>{
+
+    if(searchParams.get('username') === null || searchParams.get('username') === "" || searchParams.get('roomname') === null || searchParams.get('roomname') === ""){
+      window.location.href = window.location.origin
+    }
+
     socket.emit('joinRoom',{username:searchParams.get("username"), roomname: searchParams.get("roomname")})
 
     return () => {
@@ -120,7 +127,9 @@ return(
           </CanvasContainer>
           <InputContainer>
             <KeyboardContainer>
+            {!isMobile &&
               <Keys contentState={[userInput,setUserInput]}/>
+            }
             </KeyboardContainer>
             <SendButtonsContainer>
               <SendButton className="send" onClick={sendMessage}><SendIcon/></SendButton>
@@ -388,6 +397,10 @@ const KeyboardContainer = styled.div`
 
   @media screen and (max-width: 600px){
     max-height:120.5px;
+
+    & *{
+      display: none;
+    }
   }
 `
 
