@@ -379,6 +379,7 @@ const KeyboardContainer = styled.div`
   background:white;
   background-image: url("https://i.imgur.com/QkNhB5p.png");
   background-size: contain;
+  overflow:hidden;
 
   margin-left: 10px;
   margin-top: 20px;
