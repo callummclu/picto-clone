@@ -26,6 +26,8 @@ io.on("connect", (socket:any) => {
             userId: p_user.id,
             username: p_user.username,
             text: `Welcome ${p_user.username}`,
+            type:"announcement"
+
           });
       
           //displays a joined room message to all other room users except that particular user
@@ -34,6 +36,7 @@ io.on("connect", (socket:any) => {
             username: p_user.username,
             text: `${p_user.username} has joined the chat`,
             color: p_user.color,
+            type:"announcement"
 
           });
       
@@ -48,7 +51,8 @@ io.on("connect", (socket:any) => {
           text: text,
           svg,
           color: p_user.color,
-          image
+          image,
+          type:"message"
         });
         console.log(text)
       });
@@ -62,6 +66,8 @@ io.on("connect", (socket:any) => {
             userId: p_user.id,
             username: p_user.username,
             text: `${p_user.username} has left the room`,
+            type:"announcement"
+
           });
         }
       });

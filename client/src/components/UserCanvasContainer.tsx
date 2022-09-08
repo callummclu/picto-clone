@@ -58,15 +58,16 @@ return(
    <Centered>
     <MessagesContainer>
       <MessageMiniMap>
-      {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.color}}/>)}
+      {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>)}
       </MessageMiniMap>
       <PreviousMessagesContainer>
         {messages.map((message:any)=>{
           return (
             <>
-           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.color}}>
+           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.type === "announcement" ? 'gray' :message.color, minHeight: message.type === "announcement" ? 25 : 165, height: message.type === "announcement" ? 25 : 165}}>
                 <CanvasTextContainer style={{left:-3, top:-3}}>
-              <p><div style={{borderColor: message.color}}><h3>{message.username}</h3></div>
+                <p>
+                  {message.type !== 'announcement' && <div style={{borderColor: message.color}}><h3>{message.username}</h3></div>}
               {message.text}</p>
             </CanvasTextContainer> 
             </PreviousMessage>
