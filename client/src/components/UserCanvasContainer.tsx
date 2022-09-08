@@ -37,7 +37,6 @@ export const UserCanvasContainer = () => {
     }
 
     await socket.emit("chat",message)
-    /* SEND MESSAGE TO BACKEND */
   }
 
   useEffect(()=>{
@@ -55,15 +54,19 @@ return(
    <Centered>
     <MessagesContainer>
       <MessageMiniMap>
-      {messages.length < 24 ? messages.map((message:any)=><MessageBlip/>) : messages.slice(0, 24).map((message:any) => <MessageBlip/>)}
+      {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.color}}/>)}
       </MessageMiniMap>
       <PreviousMessagesContainer>
         {messages.map((message:any)=>{
           return (
-            <PreviousMessage className='canvas' style={{backgroundImage: `url(${message.image})`, borderColor: message.color}}>
-              <h1>{message.username}</h1>
-              <p>{message.text}</p>
+            <>
+           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.color}}>
+                <CanvasTextContainer style={{left:-3, top:-3}}>
+              <p><div style={{borderColor: message.color}}><h3>{message.username}</h3></div>
+              {message.text}</p>
+            </CanvasTextContainer> 
             </PreviousMessage>
+            </>
           )
         })}
       </PreviousMessagesContainer>
@@ -210,10 +213,10 @@ const UserBox = styled.div`
 
 const PreviousMessage = styled.div`
   width: calc(100% - 20px);
-  height: 200px;
+  height: 165px;
   background-color: white;
   border-radius: 8px;
-  min-height: 200px;
+  min-height: 165px;
   margin-right: 5px;
   border:3px solid gray;
 `
