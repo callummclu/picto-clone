@@ -43,6 +43,8 @@ export const UserCanvasContainer = () => {
       svg: await userCanvas.current.grabSvg(),
       image: await userCanvas.current.grabImage()
     }
+    userCanvas.current.clearCanvas()
+    setUserInput("")
 
     await socket.emit("chat",message)
   }
