@@ -27,6 +27,11 @@ export const UserCanvasContainer = () => {
 
 
   useEffect(()=>{
+
+    if(searchParams.get('username') === null || searchParams.get('username') === "" || searchParams.get('roomname') === null || searchParams.get('roomname') === ""){
+      window.location.href = window.location.origin
+    }
+
     socket.emit('joinRoom',{username:searchParams.get("username"), roomname: searchParams.get("roomname")})
 
     return () => {
