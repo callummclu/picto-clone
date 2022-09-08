@@ -15,7 +15,7 @@ export const UserCanvasContainer = () => {
   const [penType, setPenType] = useState(true)
   const [penWidth, setPenWidth] = useState(true)
   const [messages, setMessages] = useState<any>([])
-  const [socket] = useState(() => io('ws://192.168.0.10:5000'))
+  const [socket] = useState(() => io('wss://picto-socket.onrender.com/'))
   const [userColor,setUserColor] = useState("gray")
   const [userUsername, setUserUsername] = useState("")
 
