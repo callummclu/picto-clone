@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIcon, SmallBrushIcon } from '../icons/CanvasIcons';
 import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
+import {isMobile, isMobileSafari} from 'react-device-detect';
+
 
 
 export const UserCanvasContainer = () => {
@@ -125,7 +127,9 @@ return(
           </CanvasContainer>
           <InputContainer>
             <KeyboardContainer>
+            {!isMobile &&
               <Keys contentState={[userInput,setUserInput]}/>
+            }
             </KeyboardContainer>
             <SendButtonsContainer>
               <SendButton className="send" onClick={sendMessage}><SendIcon/></SendButton>
