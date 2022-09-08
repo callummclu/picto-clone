@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIcon, SmallBrushIcon } from '../icons/CanvasIcons';
 import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
-import {isMobile, isMobileSafari} from 'react-device-detect';
+import {isMobile} from 'react-device-detect';
 
 
 
@@ -66,6 +66,7 @@ export const UserCanvasContainer = () => {
 return(
   <>
    <Centered>
+    <h1 style={{color:"white"}}>{searchParams.get('roomname')}</h1>
     <MessagesContainer>
       <MessageMiniMap>
       {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>)}
