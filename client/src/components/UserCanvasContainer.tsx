@@ -9,7 +9,7 @@ import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
 import {isMobile} from 'react-device-detect';
 import { ClipLoader, FadeLoader } from 'react-spinners';
-
+import Color from 'color'
 
 
 export const UserCanvasContainer = () => {
@@ -20,14 +20,26 @@ export const UserCanvasContainer = () => {
   const [messages, setMessages] = useState<any>([])
   const [socket] = useState(() => io('wss://picto-socket.onrender.com/'))
   const [userColor,setUserColor] = useState("gray")
-  const [userUsername, setUserUsername] = useState("")
+  const [userLighterColor,setUserLighterColor] = useState("lightgray")
+  const [usersInRoom, setUsersInRoom] = useState([])
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>()
   const [searchParams, setSearchParams] = useSearchParams()
   const { username, roomname } = useParams()
 
+  useEffect(()=>{
 
+    const color = Color(userColor)
+    const lighterColor = Color(color).lighten(0.60).toString()
+
+    if (Color(lighterColor).hex() === Color({r:255,g:255,b:255}).hex()){
+      setUserLighterColor(color.lighten(0.2).toString())
+    } else {
+      setUserLighterColor(lighterColor)
+    }
+
+  },[userColor])
 
   useEffect(()=>{
 
@@ -65,6 +77,10 @@ export const UserCanvasContainer = () => {
 
   useEffect(()=>{
     socket.connected && messageContainerRef?.current.scrollIntoView({behavior: 'smooth'})
+    setUserColor(messages[0]?.currentUserColor)
+    console.log(messages.filter((msg:any)=>msg))
+    setUsersInRoom(messages.filter((msg:any)=>msg.type === 'announcement')[messages.length - 1]?.users)
+    userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
 return(
@@ -85,7 +101,7 @@ return(
            <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.type === "announcement" ? 'gray' :message.color, minHeight: message.type === "announcement" ? 25 : 165, height: message.type === "announcement" ? 25 : 165}}>
                 <CanvasTextContainer style={{left:-3, top:-3}}>
                 <p>
-                  {message.type !== 'announcement' && <div style={{borderColor: message.color}}><h3>{message.username}</h3></div>}
+                  {message.type !== 'announcement' && <div style={{borderColor: message.color, backgroundColor: Color(message.color).lighten(0.6).hex() === Color({r:255, g:255, b:255}).hex() ? Color(message.color).lighten(0.2).toString() : Color(message.color).lighten(0.6).toString()}}><h3 style={{color: message.color}}>{message.username}</h3></div>}
               {message.text}</p>
             </CanvasTextContainer> 
             </PreviousMessage>
@@ -108,12 +124,12 @@ return(
       <CircleButton/>
       <CircleButton/>
       <br/>
-      <CircleButton style={{backgroundColor: `${penType ? 'lightblue' : 'lightgray'}`}} onClick={()=> {userCanvas.current.penMode(); setPenType(true)}}><PenToolIcon/></CircleButton>
-      <CircleButton style={{backgroundColor: `${!penType ? 'lightblue': 'lightgray'}`}} onClick={()=> {userCanvas.current.eraseMode(); setPenType(false)}}><EraserToolIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${penType ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.penMode(); setPenType(true)}}><PenToolIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${!penType ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.eraseMode(); setPenType(false)}}><EraserToolIcon/></CircleButton>
 
       <br/>
-      <CircleButton style={{backgroundColor: `${penWidth ? 'lightblue' : 'lightgray'}`}} onClick={()=> {userCanvas.current.smallPenMode(); setPenWidth(true)}}><SmallBrushIcon/></CircleButton>
-      <CircleButton style={{backgroundColor: `${!penWidth ? 'lightblue': 'lightgray'}`}} onClick={()=> {userCanvas.current.bigPenMode(); setPenWidth(false)}}><BigBrushIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${penWidth ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.smallPenMode(); setPenWidth(true)}}><SmallBrushIcon/></CircleButton>
+      <CircleButton style={{backgroundColor: `${!penWidth ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.bigPenMode(); setPenWidth(false)}}><BigBrushIcon/></CircleButton>
       <br/>
       <CircleButton/>
       <CircleButton/>
@@ -124,16 +140,18 @@ return(
       </ButtonsContainer>
       <UserAreaContainer>
         <UserContainer>
-        <UserBox>
-            <UserColorBox/>
-            <p>{searchParams.get('username')}</p>
-          </UserBox>
+          {usersInRoom && usersInRoom.map((user:any) => (
+            <UserBox>
+              <UserColorBox style={{background: user.color}}/>
+              <p>{user.username}</p>
+            </UserBox>
+          ))}
         </UserContainer>
         <UserInputContainer>
-          <CanvasContainer>
-            <Canvas ref={userCanvas}/>
+          <CanvasContainer >
+            <Canvas ref={userCanvas} color={messages.length>0 ? userColor : 'gray'}/>
             <CanvasTextContainer>
-              <p><div><h3>{searchParams.get('username')}</h3></div>
+              <p><div style={{borderColor: userColor, backgroundColor: userLighterColor}}><h3 style={{color: userColor}}>{searchParams.get('username')}</h3></div>
               {userInput}</p>
             </CanvasTextContainer>
           </CanvasContainer>
@@ -238,6 +256,7 @@ const UserBox = styled.div`
   gap:10px;
   justify-content: center;
   align-items: center;
+  width: auto;
 `
 
 const PreviousMessage = styled.div`
@@ -321,6 +340,7 @@ const UserAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  overflow:hidden;
 `
 
 const ButtonsContainer = styled.div`

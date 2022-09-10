@@ -1,5 +1,6 @@
 import React from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import Color from 'color'
 
 export const Canvas = class extends React.Component<any,any> {
     canvas: React.RefObject<any>;
@@ -7,7 +8,7 @@ export const Canvas = class extends React.Component<any,any> {
     constructor(props:any) {
       super(props);
       this.canvas = React.createRef();
-      this.state = {strokeWidth: 3}
+      this.state = {strokeWidth: 3, color: props.color}
 
     }
 
@@ -38,16 +39,23 @@ export const Canvas = class extends React.Component<any,any> {
       return this.canvas.current.exportImage("png")
     }
 
+    setColor(color:string){
+
+
+      this.setState({...this.state, color})
+
+    }
+
     render() {
       return (
         <>
           <ReactSketchCanvas
             className="canvas"
             style={{
-                border: `3px solid gray`,
+                border: `3px solid ${this.state.color}`,
                 borderRadius: '8px',
                 backgroundSize:'contain',
-                backgroundColor:"white",
+                backgroundColor: 'white',
                 marginLeft: '10px',
                 marginRight: 0,
                 width:"calc(100% - 22px)"
