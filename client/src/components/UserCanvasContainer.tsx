@@ -8,6 +8,7 @@ import { BigBrushIcon, ClearIcon, EraserToolIcon, PenToolIcon, PullIcon, SendIco
 import { Keys } from './Keys';
 import { Canvas } from './UserCanvas';
 import {isMobile} from 'react-device-detect';
+import { ClipLoader, FadeLoader } from 'react-spinners';
 
 
 
@@ -22,7 +23,7 @@ export const UserCanvasContainer = () => {
   const [userUsername, setUserUsername] = useState("")
 
   const userCanvas = useRef<any>();
-
+  const messageContainerRef = useRef<any>()
   const [searchParams, setSearchParams] = useSearchParams()
   const { username, roomname } = useParams()
 
@@ -60,8 +61,11 @@ export const UserCanvasContainer = () => {
     socket.on('message', (recv:any) => {
       setMessages((om:any)=>[...om, recv])
     })
-    console.log('i fire once');
   },[])
+
+  useEffect(()=>{
+    socket.connected && messageContainerRef?.current.scrollIntoView({behavior: 'smooth'})
+  },[messages])
   
 return(
   <>
@@ -72,6 +76,9 @@ return(
       {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>)}
       </MessageMiniMap>
       <PreviousMessagesContainer>
+        <>
+        {socket.connected ?
+        <>
         {messages.map((message:any)=>{
           return (
             <>
@@ -85,6 +92,14 @@ return(
             </>
           )
         })}
+        <div ref={messageContainerRef}/>
+        </>
+        :
+        <div style={{width: '100%', height: '100%', display: 'flex',justifyContent: 'center',alignItems:'center'}}>
+          <ClipLoader color='white'/>
+        </div>
+      }
+        </>
       </PreviousMessagesContainer>
     </MessagesContainer>
 
