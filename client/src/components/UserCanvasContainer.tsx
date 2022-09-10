@@ -22,7 +22,7 @@ export const UserCanvasContainer = () => {
   const [userUsername, setUserUsername] = useState("")
 
   const userCanvas = useRef<any>();
-
+  const messageContainerRef = useRef<any>()
   const [searchParams, setSearchParams] = useSearchParams()
   const { username, roomname } = useParams()
 
@@ -60,8 +60,11 @@ export const UserCanvasContainer = () => {
     socket.on('message', (recv:any) => {
       setMessages((om:any)=>[...om, recv])
     })
-    console.log('i fire once');
   },[])
+
+  useEffect(()=>{
+    messageContainerRef?.current.scrollIntoView({behavior: 'smooth'})
+  },[messages])
   
 return(
   <>
@@ -72,6 +75,7 @@ return(
       {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>)}
       </MessageMiniMap>
       <PreviousMessagesContainer>
+        <>
         {messages.map((message:any)=>{
           return (
             <>
@@ -85,6 +89,8 @@ return(
             </>
           )
         })}
+        <div ref={messageContainerRef}/>
+        </>
       </PreviousMessagesContainer>
     </MessagesContainer>
 
