@@ -11,6 +11,8 @@ import {isMobile} from 'react-device-detect';
 import { ClipLoader, FadeLoader } from 'react-spinners';
 import Color from 'color'
 import {BiShare} from 'react-icons/bi'
+import { RiArrowUpSFill,RiArrowDownSFill } from 'react-icons/ri'
+import {AiOutlineClose} from 'react-icons/ai'
 
 export const UserCanvasContainer = () => {
 
@@ -22,6 +24,7 @@ export const UserCanvasContainer = () => {
   const [userColor,setUserColor] = useState("gray")
   const [userLighterColor,setUserLighterColor] = useState("lightgray")
   const [usersInRoom, setUsersInRoom] = useState([])
+  const [loadingMessage, setLoadingMessage] = useState("")
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>()
@@ -80,7 +83,7 @@ export const UserCanvasContainer = () => {
     setUserColor(messages[0]?.currentUserColor)
     console.log(messages.filter((msg:any)=>msg))
     setUsersInRoom(announcement_messages[announcement_messages.length - 1]?.users)
-    userCanvas.current.setColor(messages[0]?.currentUserColor)
+    socket.connected && userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
 
@@ -89,9 +92,27 @@ export const UserCanvasContainer = () => {
     navigator.clipboard.writeText(copyLink+"?room="+searchParams.get('roomname'))
   }
 
+  const scrollMessages = (sign:number) => {
+    messageContainerRef?.current?.scrollTo({x:0,y:100 * sign})
+  }
+
+  useEffect(() => {
+    if(!socket.connected){
+      setTimeout(()=>{
+        setLoadingMessage("if loading continues consider refreshing")
+      },5000)
+    }
+  },[])
+
+  const leaveRoom = () => {
+    window.location.href = window.location.origin
+  }
+
 return(
   <>
    <Centered>
+    {socket.connected ?
+    <>
     <ShareButton onClick={shareRoom} style={{cursor: 'pointer'}}>
       <BiShare size={20}/>
     </ShareButton>
@@ -105,10 +126,15 @@ return(
         <>
         {socket.connected ?
         <>
+        <PreviousMessage className='canvas' style={{ borderColor: 'gray' , minHeight: 25, height: 25, backgroundColor: 'darkgray',color: 'white' }}>
+                <CanvasTextContainer style={{left:-3, top:-3}}>
+                <p>PICTOCLONE - room {searchParams.get('roomname')}</p>
+            </CanvasTextContainer> 
+            </PreviousMessage>
         {messages.map((message:any)=>{
           return (
             <>
-           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.type === "announcement" ? 'gray' :message.color, minHeight: message.type === "announcement" ? 25 : 165, height: message.type === "announcement" ? 25 : 165}}>
+           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.type === "announcement" ? 'black' :message.color, minHeight: message.type === "announcement" ? 25 : 165, height: message.type === "announcement" ? 25 : 165, backgroundColor: message.type === "announcement" ? 'rgba(0,0,0,0.8)' : 'white', color: message.type === "announcement" ? 'yellow' : 'black'}}>
                 <CanvasTextContainer style={{left:-3, top:-3}}>
                 <p>
                   {message.type !== 'announcement' && <div style={{borderColor: message.color, backgroundColor: Color(message.color).lighten(0.6).hex() === Color({r:255, g:255, b:255}).hex() ? Color(message.color).lighten(0.2).toString() : Color(message.color).lighten(0.6).toString()}}><h3 style={{color: message.color}}>{message.username}</h3></div>}
@@ -131,8 +157,8 @@ return(
 
     <CanvasAndButtonContainer>
       <ButtonsContainer>
-      <CircleButton/>
-      <CircleButton/>
+      <CircleButton onClick={()=>scrollMessages(-1)}><RiArrowUpSFill size={40} style={{padding:0, color:"#5A5A58"}}/></CircleButton>
+      <CircleButton><RiArrowDownSFill size={40} style={{padding:0, color:"#5A5A58"}}/></CircleButton>
       <br/>
       <CircleButton style={{backgroundColor: `${penType ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.penMode(); setPenType(true)}}><PenToolIcon/></CircleButton>
       <CircleButton style={{backgroundColor: `${!penType ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.eraseMode(); setPenType(false)}}><EraserToolIcon/></CircleButton>
@@ -156,6 +182,8 @@ return(
               <p>{user.username}</p>
             </UserBox>
           ))}
+          <DisconnectButton onClick={leaveRoom}><AiOutlineClose/></DisconnectButton>
+
         </UserContainer>
         <UserInputContainer>
           <CanvasContainer >
@@ -180,11 +208,39 @@ return(
         </UserInputContainer>
       </UserAreaContainer>
     </CanvasAndButtonContainer>
+    </>
+    :
+<div style={{width: '100%', height: '100%', display: 'flex',justifyContent: 'center',alignItems:'center', flexDirection: 'column'}}>
+          <>
+          <ClipLoader color='white'/>
+          <p style={{textAlign:'center',width: '150px', color:'white'}}>{loadingMessage}</p>
+          </>
+        </div>
+    
+    }
     </Centered>
     <br/><br/><br/><br/>
   </>
 )
 }
+
+const DisconnectButton = styled.div`
+  width: 15px;
+  height: 15px;
+  background:lightgray;
+  border: 1.5px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:gray;
+  border-radius: 2px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+
+  &:hover{
+    background: darkgray;
+  }
+`
 
 const CanvasTextContainer = styled.div`
   position:absolute;
