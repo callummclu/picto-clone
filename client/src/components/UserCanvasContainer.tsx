@@ -126,10 +126,15 @@ return(
         <>
         {socket.connected ?
         <>
+        <PreviousMessage className='canvas' style={{ borderColor: 'gray' , minHeight: 25, height: 25, backgroundColor: 'darkgray',color: 'white' }}>
+                <CanvasTextContainer style={{left:-3, top:-3}}>
+                <p>PICTOCLONE - room {searchParams.get('roomname')}</p>
+            </CanvasTextContainer> 
+            </PreviousMessage>
         {messages.map((message:any)=>{
           return (
             <>
-           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.type === "announcement" ? 'gray' :message.color, minHeight: message.type === "announcement" ? 25 : 165, height: message.type === "announcement" ? 25 : 165}}>
+           <PreviousMessage className='canvas' style={{ backgroundImage: `url(${message.image})`, borderColor: message.type === "announcement" ? 'black' :message.color, minHeight: message.type === "announcement" ? 25 : 165, height: message.type === "announcement" ? 25 : 165, backgroundColor: message.type === "announcement" ? 'rgba(0,0,0,0.8)' : 'white', color: message.type === "announcement" ? 'yellow' : 'black'}}>
                 <CanvasTextContainer style={{left:-3, top:-3}}>
                 <p>
                   {message.type !== 'announcement' && <div style={{borderColor: message.color, backgroundColor: Color(message.color).lighten(0.6).hex() === Color({r:255, g:255, b:255}).hex() ? Color(message.color).lighten(0.2).toString() : Color(message.color).lighten(0.6).toString()}}><h3 style={{color: message.color}}>{message.username}</h3></div>}
