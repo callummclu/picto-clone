@@ -21,6 +21,7 @@ export const UserCanvasContainer = () => {
   const [socket] = useState(() => io('wss://picto-socket.onrender.com/'))
   const [userColor,setUserColor] = useState("gray")
   const [userLighterColor,setUserLighterColor] = useState("lightgray")
+  const [usersInRoom, setUsersInRoom] = useState([])
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>()
@@ -76,8 +77,9 @@ export const UserCanvasContainer = () => {
 
   useEffect(()=>{
     socket.connected && messageContainerRef?.current.scrollIntoView({behavior: 'smooth'})
-    console.log(messages)
     setUserColor(messages[0]?.currentUserColor)
+    console.log(messages.filter((msg:any)=>msg))
+    setUsersInRoom(messages.filter((msg:any)=>msg.type === 'announcement')[messages.length - 1]?.users)
     userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
@@ -138,10 +140,12 @@ return(
       </ButtonsContainer>
       <UserAreaContainer>
         <UserContainer>
-        <UserBox>
-            <UserColorBox style={{background: userColor}}/>
-            <p>{searchParams.get('username')}</p>
-          </UserBox>
+          {usersInRoom && usersInRoom.map((user:any) => (
+            <UserBox>
+              <UserColorBox style={{background: user.color}}/>
+              <p>{user.username}</p>
+            </UserBox>
+          ))}
         </UserContainer>
         <UserInputContainer>
           <CanvasContainer >
@@ -252,6 +256,7 @@ const UserBox = styled.div`
   gap:10px;
   justify-content: center;
   align-items: center;
+  width: auto;
 `
 
 const PreviousMessage = styled.div`
@@ -335,6 +340,7 @@ const UserAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  overflow:hidden;
 `
 
 const ButtonsContainer = styled.div`

@@ -63,7 +63,9 @@ io.on("connect", (socket:any) => {
             username: p_user.username,
             text: `${p_user.username} has joined the chat`,
             color: p_user.color,
-            type:"announcement"
+            type:"announcement",
+            users: get_Users(p_user.room)
+
 
           });
       
@@ -93,8 +95,8 @@ io.on("connect", (socket:any) => {
             userId: p_user.id,
             username: p_user.username,
             text: `${p_user.username} has left the room`,
-            type:"announcement"
-
+            type:"announcement",
+            users: get_Users(p_user.room)
           });
         }
       });
