@@ -20,7 +20,6 @@ export const UserCanvasContainer = () => {
   const [messages, setMessages] = useState<any>([])
   const [socket] = useState(() => io('wss://picto-socket.onrender.com/'))
   const [userColor,setUserColor] = useState("gray")
-  const [userUsername, setUserUsername] = useState("")
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>()
@@ -65,6 +64,9 @@ export const UserCanvasContainer = () => {
 
   useEffect(()=>{
     socket.connected && messageContainerRef?.current.scrollIntoView({behavior: 'smooth'})
+    console.log(messages)
+    setUserColor(messages[0]?.currentUserColor)
+    userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
 return(
@@ -125,15 +127,15 @@ return(
       <UserAreaContainer>
         <UserContainer>
         <UserBox>
-            <UserColorBox/>
+            <UserColorBox style={{background: userColor}}/>
             <p>{searchParams.get('username')}</p>
           </UserBox>
         </UserContainer>
         <UserInputContainer>
-          <CanvasContainer>
-            <Canvas ref={userCanvas}/>
+          <CanvasContainer >
+            <Canvas ref={userCanvas} color={messages.length>0 ? userColor : 'gray'}/>
             <CanvasTextContainer>
-              <p><div><h3>{searchParams.get('username')}</h3></div>
+              <p><div style={{borderColor: userColor}}><h3>{searchParams.get('username')}</h3></div>
               {userInput}</p>
             </CanvasTextContainer>
           </CanvasContainer>
