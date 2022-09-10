@@ -12,6 +12,7 @@ import { ClipLoader, FadeLoader } from 'react-spinners';
 import Color from 'color'
 import {BiShare} from 'react-icons/bi'
 import { RiArrowUpSFill,RiArrowDownSFill } from 'react-icons/ri'
+import {AiOutlineClose} from 'react-icons/ai'
 
 export const UserCanvasContainer = () => {
 
@@ -103,6 +104,10 @@ export const UserCanvasContainer = () => {
     }
   },[])
 
+  const leaveRoom = () => {
+    window.location.href = window.location.origin
+  }
+
 return(
   <>
    <Centered>
@@ -172,6 +177,8 @@ return(
               <p>{user.username}</p>
             </UserBox>
           ))}
+          <DisconnectButton onClick={leaveRoom}><AiOutlineClose/></DisconnectButton>
+
         </UserContainer>
         <UserInputContainer>
           <CanvasContainer >
@@ -211,6 +218,24 @@ return(
   </>
 )
 }
+
+const DisconnectButton = styled.div`
+  width: 15px;
+  height: 15px;
+  background:lightgray;
+  border: 1.5px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:gray;
+  border-radius: 2px;
+  cursor: pointer;
+  transition-duration: 0.2s;
+
+  &:hover{
+    background: darkgray;
+  }
+`
 
 const CanvasTextContainer = styled.div`
   position:absolute;
