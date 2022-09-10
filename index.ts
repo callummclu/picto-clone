@@ -86,7 +86,7 @@ io.on("connect", (socket:any) => {
         console.log(text)
       });
 
-      socket.on("leave room", () => {
+      socket.on("disconnect", () => {
         //the user is deleted from array of users and a left room message displayed
         const p_user = user_Disconnect(socket.id);
     
