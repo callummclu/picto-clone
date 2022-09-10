@@ -1,10 +1,13 @@
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "react-router-dom"
 import styled from "styled-components"
 
 export const Home = () => {
 
     let usernameRef = useRef<any>()
     let roomnameRef = useRef<any>()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [roomId, setRoomId] = useState(()=> searchParams.get('room'))
 
     const joinRoom = (e:any) => {
         e.preventDefault()
@@ -16,11 +19,11 @@ export const Home = () => {
         <JoinFormContainer>
         <form onSubmit={joinRoom}>
             <h1>PictoClone</h1>
-            <p>Join a room</p>
+            <h3>Join a room</h3>
         <label>username</label>
         <input type="text" ref={usernameRef} name="username" placeholder="Username" required></input>
         <label>room number</label>
-        <input type="number" ref={roomnameRef} name="roomNumber" placeholder="Room Number" required></input>
+        <input type="number" ref={roomnameRef} name="roomNumber" placeholder="Room Number" defaultValue={parseInt(roomId as string) || ''} required></input>
         <button type="submit" name="submit">Join</button>
         </form>
         </JoinFormContainer>
@@ -38,8 +41,18 @@ const Centered = styled.div`
 const JoinFormContainer = styled.div`
 border-radius: 10px;
 background:white;
+border: 3px solid gray;
 width: 100%;
 max-width: 650px;
+
+& h1 {
+    text-align: center;
+}
+
+& h3{
+    text-align: center;
+}
+
     & form {
         padding: 50px;
         display: flex;
