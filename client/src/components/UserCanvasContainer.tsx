@@ -76,10 +76,11 @@ export const UserCanvasContainer = () => {
   },[])
 
   useEffect(()=>{
+    let announcement_messages = messages.filter((msg:any)=>msg.type === 'announcement')
     socket.connected && messageContainerRef?.current.scrollIntoView({behavior: 'smooth'})
     setUserColor(messages[0]?.currentUserColor)
     console.log(messages.filter((msg:any)=>msg))
-    setUsersInRoom(messages.filter((msg:any)=>msg.type === 'announcement')[messages.length - 1]?.users)
+    setUsersInRoom(announcement_messages[announcement_messages.length - 1]?.users)
     userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
