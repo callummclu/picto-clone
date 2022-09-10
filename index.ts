@@ -3,7 +3,7 @@ import {Server} from 'socket.io'
 import color, { reset } from 'colors'
 import http from 'http'
 import cors from 'cors'
-import { get_Current_User, user_Disconnect, join_User} from './helpers/dummyUser'
+import { get_Current_User, user_Disconnect, join_User, get_Users} from './helpers/dummyUser'
 const app = express();
 
 const server = http.createServer(app)
@@ -52,8 +52,9 @@ io.on("connect", (socket:any) => {
             userId: p_user.id,
             username: p_user.username,
             text: `Welcome ${p_user.username}`,
-            type:"announcement"
-
+            type:"announcement",
+            users: get_Users(p_user.room),
+            currentUserColor: get_Current_User(socket.id).color
           });
       
           //displays a joined room message to all other room users except that particular user
