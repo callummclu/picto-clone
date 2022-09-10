@@ -1,5 +1,6 @@
 import React from 'react';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import Color from 'color'
 
 export const Canvas = class extends React.Component<any,any> {
     canvas: React.RefObject<any>;
@@ -39,7 +40,10 @@ export const Canvas = class extends React.Component<any,any> {
     }
 
     setColor(color:string){
+
+
       this.setState({...this.state, color})
+
     }
 
     render() {
@@ -51,7 +55,7 @@ export const Canvas = class extends React.Component<any,any> {
                 border: `3px solid ${this.state.color}`,
                 borderRadius: '8px',
                 backgroundSize:'contain',
-                backgroundColor:"white",
+                backgroundColor: 'white',
                 marginLeft: '10px',
                 marginRight: 0,
                 width:"calc(100% - 22px)"
