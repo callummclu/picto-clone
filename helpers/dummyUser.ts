@@ -1,5 +1,9 @@
 const c_users:any = []
 
+export function get_Users(room:string){
+  return c_users.filter((user:any) => user.room === room );
+}
+
 export function join_User(id:string, username:string, room:string,color:string){
     const p_user = {id,username,room,color}
 
