@@ -11,6 +11,7 @@ import {isMobile} from 'react-device-detect';
 import { ClipLoader, FadeLoader } from 'react-spinners';
 import Color from 'color'
 import {BiShare} from 'react-icons/bi'
+import { RiArrowUpSFill,RiArrowDownSFill } from 'react-icons/ri'
 
 export const UserCanvasContainer = () => {
 
@@ -80,7 +81,7 @@ export const UserCanvasContainer = () => {
     setUserColor(messages[0]?.currentUserColor)
     console.log(messages.filter((msg:any)=>msg))
     setUsersInRoom(announcement_messages[announcement_messages.length - 1]?.users)
-    userCanvas.current.setColor(messages[0]?.currentUserColor)
+    socket.connected && userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
 
@@ -89,9 +90,15 @@ export const UserCanvasContainer = () => {
     navigator.clipboard.writeText(copyLink+"?room="+searchParams.get('roomname'))
   }
 
+  const scrollMessages = (sign:number) => {
+    messageContainerRef?.current?.scrollTo({x:0,y:100 * sign})
+  }
+
 return(
   <>
    <Centered>
+    {socket.connected ?
+    <>
     <ShareButton onClick={shareRoom} style={{cursor: 'pointer'}}>
       <BiShare size={20}/>
     </ShareButton>
@@ -131,8 +138,8 @@ return(
 
     <CanvasAndButtonContainer>
       <ButtonsContainer>
-      <CircleButton/>
-      <CircleButton/>
+      <CircleButton onClick={()=>scrollMessages(-1)}><RiArrowUpSFill size={40} style={{padding:0, color:"#5A5A58"}}/></CircleButton>
+      <CircleButton><RiArrowDownSFill size={40} style={{padding:0, color:"#5A5A58"}}/></CircleButton>
       <br/>
       <CircleButton style={{backgroundColor: `${penType ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.penMode(); setPenType(true)}}><PenToolIcon/></CircleButton>
       <CircleButton style={{backgroundColor: `${!penType ? userLighterColor : 'lightgray'}`}} onClick={()=> {userCanvas.current.eraseMode(); setPenType(false)}}><EraserToolIcon/></CircleButton>
@@ -180,6 +187,13 @@ return(
         </UserInputContainer>
       </UserAreaContainer>
     </CanvasAndButtonContainer>
+    </>
+    :
+<div style={{width: '100%', height: '100%', display: 'flex',justifyContent: 'center',alignItems:'center'}}>
+          <ClipLoader color='white'/>
+        </div>
+    
+    }
     </Centered>
     <br/><br/><br/><br/>
   </>
