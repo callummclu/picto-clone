@@ -1,7 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { CanvasControls } from './CanvasControls';
-import { UserCanvasContainer } from './UserCanvasContainer';
+import { UserCanvasContainer } from '../components/UserCanvasContainer';
 
 export const UserContainer = (props:any) => {
 
