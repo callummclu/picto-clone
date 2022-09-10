@@ -23,6 +23,7 @@ export const UserCanvasContainer = () => {
   const [userColor,setUserColor] = useState("gray")
   const [userLighterColor,setUserLighterColor] = useState("lightgray")
   const [usersInRoom, setUsersInRoom] = useState([])
+  const [loadingMessage, setLoadingMessage] = useState("")
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>()
@@ -93,6 +94,14 @@ export const UserCanvasContainer = () => {
   const scrollMessages = (sign:number) => {
     messageContainerRef?.current?.scrollTo({x:0,y:100 * sign})
   }
+
+  useEffect(() => {
+    if(!socket.connected){
+      setTimeout(()=>{
+        setLoadingMessage("if loading continues consider refreshing")
+      },5000)
+    }
+  },[])
 
 return(
   <>
@@ -189,8 +198,11 @@ return(
     </CanvasAndButtonContainer>
     </>
     :
-<div style={{width: '100%', height: '100%', display: 'flex',justifyContent: 'center',alignItems:'center'}}>
+<div style={{width: '100%', height: '100%', display: 'flex',justifyContent: 'center',alignItems:'center', flexDirection: 'column'}}>
+          <>
           <ClipLoader color='white'/>
+          <p style={{textAlign:'center',width: '150px', color:'white'}}>{loadingMessage}</p>
+          </>
         </div>
     
     }
