@@ -10,7 +10,7 @@ import { Canvas } from './UserCanvas';
 import {isMobile} from 'react-device-detect';
 import { ClipLoader, FadeLoader } from 'react-spinners';
 import Color from 'color'
-
+import {BiShare} from 'react-icons/bi'
 
 export const UserCanvasContainer = () => {
 
@@ -50,7 +50,6 @@ export const UserCanvasContainer = () => {
     socket.emit('joinRoom',{username:searchParams.get("username"), roomname: searchParams.get("roomname")})
 
     return () => {
-      // THIS NEEDS FIXED
       socket.emit('leave room')
     }
   },[])
@@ -84,10 +83,20 @@ export const UserCanvasContainer = () => {
     userCanvas.current.setColor(messages[0]?.currentUserColor)
   },[messages])
   
+
+  const shareRoom = () => {
+    let copyLink = window.location.origin
+    navigator.clipboard.writeText(copyLink+"?room="+searchParams.get('roomname'))
+  }
+
 return(
   <>
    <Centered>
-    <h1 style={{color:"white"}}>{searchParams.get('roomname')}</h1>
+    <ShareButton onClick={shareRoom} style={{cursor: 'pointer'}}>
+      <BiShare size={20}/>
+    </ShareButton>
+    <br/><br/>
+    <br/><br/>
     <MessagesContainer>
       <MessageMiniMap>
       {messages.length < 24 ? messages.map((message:any)=><MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>) : messages.slice(-24).map((message:any) => <MessageBlip style={{background: message.type === "announcement" ? 'gray' :message.color}}/>)}
@@ -172,6 +181,7 @@ return(
       </UserAreaContainer>
     </CanvasAndButtonContainer>
     </Centered>
+    <br/><br/><br/><br/>
   </>
 )
 }
@@ -223,6 +233,40 @@ const CanvasContainer = styled.div`
   margin-left: 10px;
   justify-content: flex-end;
 `
+
+const ShareButton = styled.div`
+  z-index:1000;
+  position:fixed;
+  right:-3px;
+  bottom:-3px;
+  height:40px;
+  width: 40px;
+  background:white;
+  border: 3px solid darkgray;
+  border-top-left-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: gray;
+
+  &::after{
+    position:absolute;
+    width:45px;
+    height:45px;
+    content:'';
+    left:-6px;
+    bottom: -6px;
+    right: -6px;
+    top:-6px;
+    border: 3px solid white;
+    border-top-left-radius: 12px;
+    border-right: 0;
+    border-bottom:0;
+
+  }
+`
+
+
 
 const SendButton = styled.div`
   background-color: #D9D9D9;
