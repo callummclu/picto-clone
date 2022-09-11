@@ -1,6 +1,4 @@
-import { cleanup } from "@testing-library/react";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import styled from "styled-components";
@@ -16,7 +14,7 @@ import {
 import { Keys } from "./Keys";
 import { Canvas } from "./UserCanvas";
 import { isMobile } from "react-device-detect";
-import { ClipLoader, FadeLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import Color from "color";
 import { BiShare } from "react-icons/bi";
 import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
@@ -35,8 +33,7 @@ export const UserCanvasContainer = () => {
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { username, roomname } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const color = Color(userColor);
@@ -150,18 +147,16 @@ export const UserCanvasContainer = () => {
                         }}
                       />
                     ))
-                  : messages
-                      .slice(-24)
-                      .map((message: any) => (
-                        <MessageBlip
-                          style={{
-                            background:
-                              message.type === "announcement"
-                                ? "gray"
-                                : message.color,
-                          }}
-                        />
-                      ))}
+                  : messages.slice(-24).map((message: any) => (
+                      <MessageBlip
+                        style={{
+                          background:
+                            message.type === "announcement"
+                              ? "gray"
+                              : message.color,
+                        }}
+                      />
+                    ))}
               </MessageMiniMap>
               <PreviousMessagesContainer>
                 <>
