@@ -31,6 +31,7 @@ export const UserCanvasContainer = () => {
   const [userLighterColor, setUserLighterColor] = useState("lightgray");
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [timedOut, setTimedOut] = useState(false);
 
   const userCanvas = useRef<any>();
   const messageContainerRef = useRef<any>();
@@ -48,6 +49,7 @@ export const UserCanvasContainer = () => {
   }, [userColor]);
 
   useEffect(() => {
+    setTimedOut(false);
     if (
       searchParams.get("username") === null ||
       searchParams.get("username") === "" ||
@@ -86,18 +88,27 @@ export const UserCanvasContainer = () => {
   }, []);
 
   useEffect(() => {
+    socket.io.on("error", () => {
+      setTimedOut(true);
+    });
+  }, []);
+
+  useEffect(() => {
     let announcement_messages = messages.filter(
       (msg: any) => msg.type === "announcement"
     );
-    socket.connected &&
-      messageContainerRef?.current.scrollIntoView({ behavior: "smooth" });
+
+    if (socket.connected && !timedOut) {
+      messageContainerRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
     setUserColor(messages[0]?.currentUserColor);
     console.log(messages.filter((msg: any) => msg));
     setUsersInRoom(
       announcement_messages[announcement_messages.length - 1]?.users
     );
-    socket.connected &&
-      userCanvas.current.setColor(messages[0]?.currentUserColor);
+    if (socket.connected && !timedOut) {
+      userCanvas.current?.setColor(messages[0]?.currentUserColor);
+    }
   }, [messages]);
 
   const shareRoom = () => {
@@ -109,6 +120,10 @@ export const UserCanvasContainer = () => {
 
   const scrollMessages = (sign: number) => {
     messageContainerRef?.current?.scrollTo({ x: 0, y: 100 * sign });
+  };
+
+  const reloadPage = () => {
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -126,7 +141,7 @@ export const UserCanvasContainer = () => {
   return (
     <>
       <Centered>
-        {socket.connected ? (
+        {socket.connected && !timedOut ? (
           <>
             <ShareButton onClick={shareRoom} style={{ cursor: "pointer" }}>
               <BiShare size={20} />
@@ -437,8 +452,13 @@ export const UserCanvasContainer = () => {
               <p
                 style={{ textAlign: "center", width: "150px", color: "white" }}
               >
-                {loadingMessage}
+                {timedOut
+                  ? "connected timed out please refresh"
+                  : loadingMessage}
               </p>
+              {loadingMessage.length > 0 && (
+                <button onClick={reloadPage}>refresh</button>
+              )}
             </>
           </div>
         )}
