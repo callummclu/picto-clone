@@ -1,17 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-body{
-  font-family: 'VT323', sans-serif;
-  background:#4D4D4D;
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+body {
+  font-family: "VT323", sans-serif;
+  background: #4d4d4d;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
 }
-.canvas{
-  position:relative;
+
+button {
+  font-family: "VT323", sans-serif;
+}
+
+.canvas {
+  position: relative;
 }
 
 .canvas::before {
@@ -26,88 +31,88 @@ body{
   border-radius: 10px;
 }
 
-.key{
-  width:27px;
-  height:27px;
+.key {
+  width: 27px;
+  height: 27px;
   z-index: 100;
 }
-.key:hover{
+.key:hover {
   border: 1px dotted red;
-  cursor:pointer;
+  cursor: pointer;
 }
-.key:active{
-  background:rgba(60,60,60,0.2);
-  border:0;
-}
-
-.key.caps.active{
-  background:rgba(60,60,60,0.5)
+.key:active {
+  background: rgba(60, 60, 60, 0.2);
+  border: 0;
 }
 
-.row{
-  position:absolute;
-}
-.row.one{
-  margin-left:2.5px;
-}
-.row.one>.key{
-  float:left;
-  margin-left:2.5px;
+.key.caps.active {
+  background: rgba(60, 60, 60, 0.5);
 }
 
-.row.two{
-  margin-top:32px;
-  margin-left:17.5px;
+.row {
+  position: absolute;
+}
+.row.one {
+  margin-left: 2.5px;
+}
+.row.one > .key {
+  float: left;
+  margin-left: 2.5px;
 }
 
-.row.two>.key{
-  float:left;
-  margin-left:2.5px;
+.row.two {
+  margin-top: 32px;
+  margin-left: 17.5px;
 }
 
-.row.two>.enter{
-  width:40px;
+.row.two > .key {
+  float: left;
+  margin-left: 2.5px;
 }
 
-.row.three{
-  margin-top:60px;
-  margin-left:.5px;
+.row.two > .enter {
+  width: 40px;
 }
 
-.row.three>.key{
-  float:left;
-  margin-left:2.5px;
+.row.three {
+  margin-top: 60px;
+  margin-left: 0.5px;
 }
 
-.row.three>.caps{
-  width:30px;
-}
-.row.three>.enter{
-  width:55px;
+.row.three > .key {
+  float: left;
+  margin-left: 2.5px;
 }
 
-.row.four{
-  margin-top:90px;
-  margin-left:.5px;
+.row.three > .caps {
+  width: 30px;
+}
+.row.three > .enter {
+  width: 55px;
 }
 
-.row.four>.key{
-  float:left;
-  margin-left:2.5px;
+.row.four {
+  margin-top: 90px;
+  margin-left: 0.5px;
 }
-.row.four>.shift{
+
+.row.four > .key {
+  float: left;
+  margin-left: 2.5px;
+}
+.row.four > .shift {
   width: 42px;
 }
-.row.five{
-  margin-top:118px;
-  margin-left:58px;
+.row.five {
+  margin-top: 118px;
+  margin-left: 58px;
 }
 
-.row.five>.space{
-  width:145px;
+.row.five > .space {
+  width: 145px;
 }
 
-.row.five>.key{
-  float:left;
-  margin-left:2.5px;
+.row.five > .key {
+  float: left;
+  margin-left: 2.5px;
 }
