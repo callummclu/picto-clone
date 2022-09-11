@@ -1,4 +1,6 @@
-# PictoClone
+![Group 19](https://user-images.githubusercontent.com/20967589/189527530-aeb3adad-055c-4d3d-863c-7e136ced7bb2.svg)
+
+
 A brand new remake of an old classic on the nintendo DS built with web sockets and react! reimagined for a more current audience
 
 [try it out!](https://picto-clone.vercel.app/)
