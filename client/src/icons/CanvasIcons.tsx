@@ -166,10 +166,10 @@ export const ClearIcon = () => (
   </svg>
 );
 
-export const PictoLogo = ({ color }: { color: string }) => (
+export const PictoLogo = ({ color, width }: { color: string; width: any }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="176"
+    width={width || 176}
     height="16"
     fill="none"
     viewBox="0 0 176 16"

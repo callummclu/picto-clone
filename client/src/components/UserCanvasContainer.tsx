@@ -7,6 +7,7 @@ import {
   ClearIcon,
   EraserToolIcon,
   PenToolIcon,
+  PictoLogo,
   PullIcon,
   SendIcon,
   SmallBrushIcon,
@@ -172,9 +173,17 @@ export const UserCanvasContainer = () => {
                           color: "white",
                         }}
                       >
-                        <CanvasTextContainer style={{ left: -3, top: -3 }}>
-                          <p>
-                            PICTOCLONE - room {searchParams.get("roomname")}
+                        <CanvasTextContainer style={{ left: 10 }}>
+                          <p
+                            style={{
+                              height: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <PictoLogo width="120px" color="white" /> - room{" "}
+                            {searchParams.get("roomname")}
                           </p>
                         </CanvasTextContainer>
                       </PreviousMessage>

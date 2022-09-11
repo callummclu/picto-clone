@@ -20,7 +20,7 @@ export const Home = () => {
     <Centered>
       <JoinFormContainer>
         <form onSubmit={joinRoom}>
-          <PictoLogo color="gray" />
+          <PictoLogo width={176} color="gray" />
           <p style={{ color: "gray" }}>Join a room</p>
 
           <PictoInput
