@@ -1,13 +1,41 @@
-![Group 19](https://user-images.githubusercontent.com/20967589/189527530-aeb3adad-055c-4d3d-863c-7e136ced7bb2.svg)
 
-
+<p align='center'>
+<img style="width:250px" src="https://github.com/callummclu/picto-clone/assets/20967589/e8257f9a-de68-4657-b988-c2be6d460124">
+</p>
 A brand new remake of an old classic on the nintendo DS built with web sockets and react! reimagined for a more current audience
 
-[try it out!](https://picto-clone.vercel.app/)
+<p align='center'>
+  <a href="https://picto-clone.vercel.app/">Try it out here!</a>
+</p>
+
+---
+
+![picto](https://github.com/callummclu/picto-clone/assets/20967589/0ce37e64-7aa8-40d8-a03e-b22bf464927c)
 
 
-<img width="502" alt="Screenshot 2022-09-11 at 00 03 10" src="https://user-images.githubusercontent.com/20967589/189504604-b8a58dbe-2d67-4c5a-b4f0-a07eb3bb31fa.png">
+## Features 🦶
 
-## Design Files
+Picto clone offers the following, in an attempt to replicate the experience of picto chat within the browser
 
-[figma here!](https://www.figma.com/file/dPyiSHQXKtlqk4krGudK5g/Pictochat-clone?node-id=2%3A2)
+- Similar UI
+- Canvas drawing input
+  - including different pen widths
+- Keyboard input (currently only on browser)
+- Chat rooms
+- Pulling down previous messages to edit and resend
+- clearing your canvas
+
+To improve the system for modern day the system includes
+
+- online connection using web sockets
+- infinite chat rooms you can join using a chatroom code, this is sharable through the share icon
+
+## Future Features 🔮
+- Rainbow pen
+- keyboard functionality on mobile size screens
+
+## What was this built with? 🤔
+- React
+- NodeJs
+- ExpressJs
+- socket.io
