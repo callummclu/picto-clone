@@ -3,9 +3,11 @@
 <img style="width:250px" src="https://github.com/callummclu/picto-clone/assets/20967589/e8257f9a-de68-4657-b988-c2be6d460124">
 </p>
 A brand new remake of an old classic on the nintendo DS built with web sockets and react! reimagined for a more current audience
-
+<br/><br/><br/>
 <p align='center'>
-  <a href="https://picto-clone.vercel.app/">Try it out here!</a>
+  <a href="https://picto-clone.vercel.app/">
+    <img width="100" src="https://github.com/callummclu/picto-clone/assets/20967589/821a0129-c1c0-453a-8bda-8d274db42578">
+  </a>
 </p>
 
 ---
