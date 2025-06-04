@@ -2,7 +2,7 @@
 <p align='center'>
 <img style="width:250px" src="https://github.com/callummclu/picto-clone/assets/20967589/e8257f9a-de68-4657-b988-c2be6d460124">
 </p>
-A brand new remake of an old classic on the nintendo DS built with web sockets and react! reimagined for a more current audience
+A remake of the nintendo DS picto chat built with web sockets and react
 <br/><br/><br/>
 <p align='center'>
   <a href="https://picto-clone.vercel.app/">
